@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101a2d">
+  <meta name="description" content="Search archived files in the Wayback Machine.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <title>Wayback Scanner</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <header class="topbar"><div class="brand-mark" aria-hidden="true">W</div><div><strong>Wayback Scanner</strong><small>Find files in archived sites</small></div><span class="beta">BETA</span></header>
+  <main>
+    <section class="intro"><p class="eyebrow">INTERNET ARCHIVE SEARCH</p><h1>Find the files<br>you’re looking for.</h1><p class="intro-copy">Search the Wayback Machine’s public capture index by site, date, and file type.</p></section>
+    <form id="search-form" class="panel search-panel">
+      <label for="site">Domain or URL</label><input id="site" name="site" type="text" placeholder="example.com or https://example.com/files/" autocomplete="url" required>
+      <div class="grid-two"><div><label for="match">Search scope</label><select id="match"><option value="domain">Entire domain</option><option value="prefix">URL and subpaths</option><option value="exact">Exact URL</option></select></div><div><label for="limit">Maximum records</label><select id="limit"><option>100</option><option selected>500</option><option>1000</option><option>5000</option></select></div></div>
+      <label for="extensions">File extensions <span class="hint">comma-separated; leave blank for all</span></label><input id="extensions" type="text" value=".exe, .apk" placeholder=".exe, .apk, .pdf">
+      <div class="grid-two"><div><label for="from-date">From year</label><input id="from-date" type="number" inputmode="numeric" placeholder="1996" min="1996" max="2099"></div><div><label for="to-date">To year</label><input id="to-date" type="number" inputmode="numeric" placeholder="2026" min="1996" max="2099"></div></div>
+      <details class="advanced"><summary>More filters</summary><div class="grid-two advanced-grid"><div><label for="status">HTTP status</label><select id="status"><option value="">Any status</option><option value="200">200 — OK</option><option value="206">206 — Partial</option><option value="301">301 — Redirect</option><option value="403">403 — Forbidden</option></select></div><div><label for="mime">MIME contains</label><input id="mime" type="text" placeholder="application"></div></div><label class="checkline"><input id="latest-only" type="checkbox" checked> Show latest capture per file</label></details>
+      <button id="search-button" class="primary" type="submit"><span>Search archive</span><span aria-hidden="true">→</span></button><p class="fineprint">Searches public archive metadata only. It does not crawl the live site.</p>
+    </form>
+    <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+    <section id="results-section" hidden><div class="section-heading"><div><p class="eyebrow">SEARCH REPORT</p><h2>Results</h2></div><button id="new-search" class="text-button" type="button">New search</button></div><div id="stats" class="stats"></div><div class="toolbar"><label class="checkline select-all"><input id="select-all" type="checkbox"> Select all</label><span id="selected-count" class="selected-count">0 selected</span><button id="download-selected" class="secondary" type="button" disabled>Open selected</button><div class="export-group"><button id="export-csv" class="secondary" type="button">CSV</button><button id="export-json" class="secondary" type="button">JSON</button></div></div><div class="table-wrap"><table><thead><tr><th aria-label="Select"></th><th>File</th><th>Captured</th><th>Size</th><th>Status</th></tr></thead><tbody id="results-body"></tbody></table></div><p id="result-note" class="fineprint"></p></section>
+    <footer>Metadata provided by the Internet Archive Wayback Machine. Availability and recorded file sizes vary.</footer>
+  </main><template id="empty-template"><tr><td colspan="5" class="empty">No matching files found for these filters.</td></tr></template>
+</body></html>
